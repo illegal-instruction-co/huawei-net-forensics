@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NET_FORENSICS // MISSION_CONTROL</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+
+    <header style="margin-bottom: 20px; border-bottom: 1px solid var(--color-border); padding-bottom: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+            <div>
+                <h1>NET_FORENSICS</h1>
+                <div style="font-size: 12px; color: var(--text-muted);">ANOMALY DETECTION SYSTEM // V2.0</div>
+            </div>
+            <div style="text-align: right; font-size: 11px; color: var(--text-muted);">
+                STATUS: <span id="sys-status" style="color: var(--color-green);">MONITORING</span><br>
+                UPTIME: <span id="sys-uptime">00:00:00</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-grid">
+        <div class="sidebar">
+            <div class="panel" style="margin-bottom: 20px;">
+                <div class="panel-header">REALTIME_TELEMETRY</div>
+
+                <div class="stat-row">
+                    <span>RF_SCORE</span>
+                    <span class="stat-value" id="val-score">--</span>
+                </div>
+                <div class="stat-row">
+                    <span>THROUGHPUT</span>
+                    <span class="stat-value" style="color: var(--color-green);" id="val-speed">-- Mbps</span>
+                </div>
+                <div class="stat-row">
+                    <span>LATENCY</span>
+                    <span class="stat-value" id="val-lat">-- ms</span>
+                </div>
+                <div class="stat-row">
+                    <span>JITTER</span>
+                    <span class="stat-value" id="val-jitter">-- ms</span>
+                </div>
+                <div class="stat-row">
+                    <span>RAMP_RATIO</span>
+                    <span class="stat-value" id="val-ramp">--</span>
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid var(--color-border); margin: 15px 0;">
+
+                <div class="panel-header">CURRENT_WINDOW_PROBABILITY</div>
+
+                <div class="prob-meter">
+                    <div class="prob-label">
+                        <span>RADIO_IMPAIRMENT</span>
+                        <span id="prob-radio-val">0%</span>
+                    </div>
+                    <div class="prob-bar-bg">
+                        <div class="prob-bar-fill" id="prob-radio-bar"
+                            style="width: 0%; background: var(--color-cyan);"></div>
+                    </div>
+                </div>
+
+                <div class="prob-meter">
+                    <div class="prob-label">
+                        <span>NET_CONGESTION</span>
+                        <span id="prob-cong-val">0%</span>
+                    </div>
+                    <div class="prob-bar-bg">
+                        <div class="prob-bar-fill" id="prob-cong-bar"
+                            style="width: 0%; background: var(--color-orange);"></div>
+                    </div>
+                </div>
+
+                <div class="prob-meter">
+                    <div class="prob-label">
+                        <span>TRAFFIC_POLICY</span>
+                        <span id="prob-policy-val">0%</span>
+                    </div>
+                    <div class="prob-bar-bg">
+                        <div class="prob-bar-fill" id="prob-policy-bar"
+                            style="width: 0%; background: var(--color-red);"></div>
+                    </div>
+                </div>
+
+                <div class="verdict-box" id="verdict-display">
+                    ANALYZING...
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">CONTEXT_INFO</div>
+                <div style="font-size: 12px; line-height: 1.6;">
+                    BAND: <span id="meta-band" style="color: #fff">--</span><br>
+                    PCI: <span id="meta-pci" style="color: #fff">--</span><br>
+                    ENODEB: <span id="meta-enodeb" style="color: #fff">--</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="panel" style="margin-bottom: 20px;">
+                <div class="panel-header">
+                    <span>EVIDENCE TIMELINE (LAST 24H)</span>
+                    <span style="font-size: 10px;">[BLUE: RF] [GREEN: T-PUT] [ORANGE: PSI]</span>
+                </div>
+                <div style="font-size: 9px; color: #666; margin-bottom: 5px; text-align: right;">PSI = Behavioral
+                    anomaly index, not a verdict</div>
+                <div class="chart-container">
+                    <canvas id="mainChart"></canvas>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">ISP ACCOUNTABILITY LOG</div>
+                <div style="overflow-x: auto; max-height: 200px; overflow-y: auto;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid #333; text-align: left;">
+                                <th style="padding: 5px;">TIME</th>
+                                <th style="padding: 5px;">EVENT</th>
+                                <th style="padding: 5px;">SEVERITY</th>
+                            </tr>
+                        </thead>
+                        <tbody id="accountability-log">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel" style="margin-top: 20px;">
+                    <div class="panel-header">ABUSE HEATMAP (PSI INTENSITY PER HOUR)</div>
+                    <div class="chart-container" style="height: 180px;">
+                        <canvas id="heatmapChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="app.js" type="module"></script>
+</body>
+
+</html>

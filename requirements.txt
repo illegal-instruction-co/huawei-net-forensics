@@ -1,0 +1,3 @@
+huawei-lte-api
+python-dotenv
+speedtest-cli
