@@ -127,6 +127,23 @@ th {
 
 
 
+.export-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background: var(--panel-bg);
+    border: 1px solid var(--color-border);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background 0.2s;
+}
+
+.export-btn:hover {
+    background: var(--color-border);
+}
+
 .pulse {
     animation: pulse 1s infinite alternate;
 }

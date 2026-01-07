@@ -286,6 +286,28 @@ class ApiHandler(BaseHTTPRequestHandler):
             rs.reverse(); self.send_json({"data": rs})
         elif p == "/stats":
             self.handle_stats()
+        elif p.startswith("/export/"):
+            filename = p[len("/export/"):]
+            csv_path = None
+            if filename == "history.csv":
+                csv_path = LOG_CSV
+            elif filename == "state.csv":
+                csv_path = STATE_CSV
+            elif filename == "cell_history.csv":
+                csv_path = CELL_HISTORY_CSV
+            if csv_path and os.path.exists(csv_path):
+                with open(csv_path, "rb") as f:
+                    content = f.read()
+                self.send_response(200)
+                self.send_header("Content-Type", "text/csv")
+                self.send_header("Content-Disposition", f"attachment; filename={filename}")
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.send_header("Content-Length", str(len(content)))
+                self.end_headers()
+                self.wfile.write(content)
+            else:
+                self.send_response(404)
+                self.end_headers()
         else:
             self.handle_static(p)
 
